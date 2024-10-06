@@ -15,7 +15,7 @@ spinBtn.addEventListener("click", () => {
 
 function calculateResult(degree) {
     // Here, you can customize your options and their corresponding angles
-    const options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+    const options = ["1,000", "750", "500", "200", "100"];
     const totalOptions = options.length;
     const anglePerOption = 360 / totalOptions;
 
