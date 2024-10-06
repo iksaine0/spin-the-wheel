@@ -1,24 +1,29 @@
 const wheel = document.getElementById("wheel");
 const spinBtn = document.getElementById("spinBtn");
 const resultDiv = document.getElementById("result");
+const desiredOptionInput = document.getElementById("desiredOption");
 
 spinBtn.addEventListener("click", () => {
-    const randomDegree = Math.floor(Math.random() * 360 + 360 * 5); // Spin multiple times
-    wheel.style.transform = `rotate(${randomDegree}deg)`;
+    const desiredOption = desiredOptionInput.value; // Get the desired option from the input field
+    const options = ["800", "600", "400", "200", "100"];
+    
+    if (!options.includes(desiredOption)) {
+        resultDiv.innerText = "Invalid option! Please enter a valid option.";
+        return;
+    }
 
-    // Calculate the winning option based on the random degree
-    const result = calculateResult(randomDegree);
+    const index = options.indexOf(desiredOption); // Find the index of the desired option
+    const anglePerOption = 360 / options.length;
+    const desiredDegree = index * anglePerOption; // Calculate the angle for the desired option
+    const randomSpinMultiplier = Math.floor(Math.random() * 5) + 5; // Spin multiple times
+
+    // Set the total spin angle
+    const totalSpinAngle = desiredDegree + randomSpinMultiplier * 360;
+
+    wheel.style.transform = `rotate(${totalSpinAngle}deg)`;
+
+    // Set result after spin duration
     setTimeout(() => {
-        resultDiv.innerText = `You landed on: ${result}`;
-    }, 4000); // Adjust timeout to match the spin duration
+        resultDiv.innerText = `You landed on: ${desiredOption}`;
+    }, 4000); // Match this timeout with the duration of the spin
 });
-
-function calculateResult(degree) {
-    // Here, you can customize your options and their corresponding angles
-    const options = ["1,000", "750", "500", "200", "100"];
-    const totalOptions = options.length;
-    const anglePerOption = 360 / totalOptions;
-
-    const index = Math.floor(((degree % 360) / anglePerOption));
-    return options[index];
-}
